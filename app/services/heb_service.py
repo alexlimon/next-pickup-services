@@ -4,11 +4,8 @@ from app.services.clients import heb_client
 from app.models.store_brand import StoreBrand
 from queue import PriorityQueue
 from datetime import datetime
-import time
 
 def get_next_pickups(zipcode):
-    
-    start_time = time.time()
 
     if not parameter_validation.is_zipcode_valid(zipcode) :
         raise AttributeError("The zip code " + zipcode + " is invalid")
@@ -17,11 +14,7 @@ def get_next_pickups(zipcode):
     heb.name = "HEB"
     heb.store_list = list()
 
-    setup_time = time.time()
-
     all_stores = heb_client.get_stores_by_zipcode(zipcode)
-    
-    allstores_time = time.time()
 
     top_available_stores = PriorityQueue()
 
