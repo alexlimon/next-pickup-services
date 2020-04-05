@@ -1,6 +1,6 @@
 # Next-Pickup
 
-### This is a web service that has exposed REST API's that is meant to retrieve different pickup and delivery times during quarantine. Most arguments are driven by zipcodes, current services only work with the following stores:
+### This is a web service that has exposed REST API's that are meant to retrieve different pickup and delivery times during quarantine. Most arguments are driven by zipcodes, current services only work with the following stores:
 
 * HEB
 
