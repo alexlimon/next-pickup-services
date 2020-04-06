@@ -1,25 +1,25 @@
 import requests
+import aiohttp 
+
 import json
 from urllib.error import HTTPError
 
-session = requests.Session()
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36',
+    'Accept': "*/*",
+    'Accept-Encoding': "gzip, deflate, br",
+    'Connection': "keep-alive",
+    'Content-Type':"application/json"
+}
 
-session.headers['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36'
-session.headers['Accept'] = "*/*"
-session.headers['Accept-Encoding'] = "gzip, deflate, br"
-session.headers['Connection'] = "keep-alive"
-session.headers['Content-Type'] = "application/json"
+async def get_async(url):
+    async with aiohttp.ClientSession() as async_session:
+        async with async_session.get(url, headers = headers) as response:
+            content = await response.read()
+            return json.loads(content)
 
-def get(url):
-    response = session.get(url)
-    
-    return json.loads(response.content)
-
-def post(url, payload):
-    response = session.post(url, payload)
-
-    if(not response.ok):
-        raise HTTPError(url, response.status_code, response.content, response.headers, None)
-
-    return json.loads(response.content)
-
+async def post_async(url, payload):
+    async with aiohttp.ClientSession() as async_session:
+        async with async_session.post(url, headers = headers, data = payload) as response:
+            content = await response.read()
+            return json.loads(content)
