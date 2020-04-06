@@ -10,7 +10,7 @@ import asyncio
 @app.route("/pickup/<zipcode>", methods = ['GET'])
 async def next_time_all_stores(zipcode):
     try:
-        next_pickups = await heb_service.get_next_pickups(zipcode)
+        next_pickups = await heb_service.get_next_pickups(zipcode, 5)
     except AttributeError as ex:
        return Response(json.dumps({"error": str(ex)}),status=400, mimetype='application/json')
     except HTTPError as ex:
