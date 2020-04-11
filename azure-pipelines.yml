@@ -5,9 +5,9 @@
 
 trigger:
   - az-func-release
-  
-  
-  variables:
+
+
+variables:
     # Azure Resource Manager connection created during pipeline creation
     azureSubscription: '008e6d9e-6098-492e-9773-fa8d5a0db162'
   
@@ -20,7 +20,7 @@ trigger:
     # Working Directory
     workingDirectory: '/'
   
-  stages:
+stages:
   - stage: Build
     displayName: Build stage
   
