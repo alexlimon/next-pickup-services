@@ -17,7 +17,7 @@ variables:
   vmImageName: 'ubuntu-latest'
 
   # Working Directory
-  workingDirectory: 'pickup'
+  workingDirectory: 'microservices'
 
 stages:
 - stage: Build
