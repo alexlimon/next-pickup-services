@@ -1,6 +1,6 @@
-from app.services.helpers import requests
+from ..helpers import requests
 import json
-from app.models.store import Store
+from ...models.store import Store
 import asyncio
 import time
 from queue import PriorityQueue

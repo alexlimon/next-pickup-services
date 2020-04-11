@@ -1,4 +1,4 @@
-from app.services.helpers import requests
+from . import requests
 
 async def is_zipcode_valid(zipcode):
     

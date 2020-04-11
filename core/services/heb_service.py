@@ -1,7 +1,6 @@
-import requests
-from app.services.helpers import parameter_validation
-from app.services.clients import heb_client
-from app.models.store_brand import StoreBrand
+from .helpers import parameter_validation
+from .clients import heb_client
+from ..models.store_brand import StoreBrand
 from queue import PriorityQueue
 from datetime import datetime
 import asyncio
