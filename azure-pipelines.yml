@@ -95,7 +95,7 @@ stages:
             displayName: 'Remove website run from package function setting'
             inputs:
                 azureSubscription: '$(azureSubscription)'
-                scriptType: ps
+                scriptType: bash
                 scriptLocation: inlineScript
                 inlineScript: |
                   az functionapp config appsettings delete --name $(functionAppName) --resource-group $(resourceGroup) --setting-names 'WEBSITE_RUN_FROM_PACKAGE'
