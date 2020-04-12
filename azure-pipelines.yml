@@ -92,7 +92,7 @@ stages:
               appSettings: -ENABLE_ORYX_BUILD true -SCM_DO_BUILD_DURING_DEPLOYMENT true -WEBSITE_RUN_FROM_PACKAGE "0"
           
           - task: AzureAppServiceSettings@1
-            displayName: Azure App Service Settings
+            displayName: 'Disabling from package'
             inputs:
                 resourceGroupName: $(resourceGroup)
                 azureSubscription: $(azureSubscription)
@@ -101,7 +101,7 @@ stages:
                   [
                     {
                       "name": "WEBSITE_RUN_FROM_PACKAGE",
-                      "value": "0",
+                      "value": "1",
                       "slotSetting": false
                     }
                   ]
