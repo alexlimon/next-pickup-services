@@ -19,6 +19,8 @@ variables:
   # Working Directory
   workingDirectory: 'microservices'
 
+  resourceGroup: 'Next-Pickup'
+
 stages:
 - stage: Build
   displayName: Build stage
@@ -87,5 +89,19 @@ stages:
               appName: $(functionAppName)
               package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
               deploymentMethod: 'zipDeploy'
-              
               appSettings: -ENABLE_ORYX_BUILD true -SCM_DO_BUILD_DURING_DEPLOYMENT true -WEBSITE_RUN_FROM_PACKAGE "0"
+          
+          - task: AzureAppServiceSettings@1
+            displayName: Azure App Service Settings
+            inputs:
+                resourceGroupName: $(resourceGroup)
+                azureSubscription: $(azureSubscription)
+                appName: $(functionAppName)
+                appSettings: |
+                  [
+                    {
+                      "name": "WEBSITE_RUN_FROM_PACKAGE",
+                      "value": "0",
+                      "slotSetting": false
+                    }
+                  ]
