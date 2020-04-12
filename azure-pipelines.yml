@@ -89,19 +89,13 @@ stages:
               appName: $(functionAppName)
               package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
               deploymentMethod: 'zipDeploy'
-              appSettings: -ENABLE_ORYX_BUILD true -SCM_DO_BUILD_DURING_DEPLOYMENT true -WEBSITE_RUN_FROM_PACKAGE "0"
+              appSettings: -ENABLE_ORYX_BUILD true -SCM_DO_BUILD_DURING_DEPLOYMENT true
           
-          - task: AzureAppServiceSettings@1
-            displayName: 'Disabling from package'
+          - task: AzureCLI@2
+            displayName: 'Remove website run from package function setting'
             inputs:
-                resourceGroupName: $(resourceGroup)
-                azureSubscription: $(azureSubscription)
-                appName: $(functionAppName)
-                appSettings: |
-                  [
-                    {
-                      "name": "WEBSITE_RUN_FROM_PACKAGE",
-                      "value": "1",
-                      "slotSetting": false
-                    }
-                  ]
+                azureSubscription: '$(azureSubscription)'
+                scriptType: ps
+                scriptLocation: inlineScript
+                inlineScript: |
+                  az functionapp config appsettings delete --name $(functionAppName) --resource-group $(resourceGroup) --setting-names 'WEBSITE_RUN_FROM_PACKAGE'
