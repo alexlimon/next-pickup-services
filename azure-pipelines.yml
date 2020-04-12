@@ -86,3 +86,5 @@ stages:
               appType: functionAppLinux
               appName: $(functionAppName)
               package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+              deploymentMethod: 'zipDeploy'
+              appSettings: -ENABLE_ORYX_BUILD true -SCM_DO_BUILD_DURING_DEPLOYMENT true
