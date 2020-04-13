@@ -8,7 +8,7 @@
           "GET"
         ]
       },
-      "backendUri": "http://localhost:7071/api/letsencrypt/.well-known/acme-challenge/{file}"
+      "backendUri": " https://next-pickup-services.azurewebsites.net/.well-known/acme-challenge/{file}"
     }
   }
 }
