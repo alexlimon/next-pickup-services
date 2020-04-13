@@ -1,4 +1,14 @@
 {
   "$schema": "http://json.schemastore.org/proxies",
-  "proxies": {}
+  "proxies": {
+    "Root URI to Redirector Trigger Function": {
+      "matchCondition": {
+        "route": "/.well-known/acme-challenge/{file}",
+        "methods": [
+          "GET"
+        ]
+      },
+      "backendUri": "http://localhost:7071/api/letsencrypt/.well-known/acme-challenge/{file}"
+    }
+  }
 }

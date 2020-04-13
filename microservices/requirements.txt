@@ -1,6 +1,8 @@
 aiohttp==3.6.2
 async-timeout==3.0.1
 asyncio==3.4.3
+azure-storage==0.36.0
 azure-functions==1.2.0
 dataclasses-json==0.4.2
+dependency-injector==3.15.6
 jsonpickle==1.3

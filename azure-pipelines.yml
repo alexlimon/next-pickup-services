@@ -89,7 +89,7 @@ stages:
               appName: $(functionAppName)
               package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
               deploymentMethod: 'zipDeploy'
-              appSettings: -ENABLE_ORYX_BUILD true -SCM_DO_BUILD_DURING_DEPLOYMENT true
+              appSettings: -ENABLE_ORYX_BUILD true -SCM_DO_BUILD_DURING_DEPLOYMENT true -STORAGE_ACCOUNT_NAME $(storageAccountName) -STORAGE_ACCOUNT_KEY $(storageAccountKey)
           
           - task: AzureCLI@2
             displayName: 'Remove website run from package function setting'
