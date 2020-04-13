@@ -8,7 +8,7 @@
           "GET"
         ]
       },
-      "backendUri": " https://next-pickup-services.azurewebsites.net/api/letsencrypt/.well-known/acme-challenge/{file}"
+      "backendUri": "http://%WEBSITE_HOSTNAME%/api/letsencrypt/.well-known/acme-challenge/{file}"
     }
   }
 }
