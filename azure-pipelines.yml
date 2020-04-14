@@ -51,5 +51,6 @@ stages:
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
           inlineScript: |
+            pwd
             cd $(workingDirectory)
             func azure functionapp publish $(functionAppName) --build remote
