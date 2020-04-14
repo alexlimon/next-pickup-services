@@ -53,4 +53,4 @@ stages:
           inlineScript: |
             cd $(workingDirectory)
             pwd
-            func azure functionapp publish $(functionAppName) --build remote
+            func azure functionapp publish $(functionAppName) --python --build remote
