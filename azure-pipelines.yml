@@ -1,4 +1,5 @@
 # Python Function App to Linux on Azure
+
 # Build a Python function app and deploy it to Azure as a Linux function app.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
@@ -17,7 +18,7 @@ variables:
   vmImageName: 'ubuntu-latest'
 
   # Working Directory
-  workingDirectory: 'pickup'
+  workingDirectory: 'microservices'
 
 stages:
 - stage: Build
@@ -37,35 +38,23 @@ stages:
         fi
       workingDirectory: $(workingDirectory)
       displayName: 'Build extensions'
-
+    
     - task: UsePythonVersion@0
-      displayName: 'Use Python 3.6'
+      displayName: 'Set Python version to 3.7'
       inputs:
-        versionSpec: 3.6 # Functions V2 supports Python 3.6 as of today
-
-    - bash: |
-        python -m venv worker_venv
-        source worker_venv/bin/activate
-        pip install -r requirements.txt
-      workingDirectory: $(workingDirectory)
-      displayName: 'Install application dependencies'
-
-    - task: ArchiveFiles@2
-      displayName: 'Archive files'
+       versionSpec: '3.7'
+       addToPath: true
+       architecture: 'x64'
+    - task: FuncToolsInstaller@0
+      displayName: 'Install function Azure Functions Toolset for Deployment'
       inputs:
-        rootFolderOrFile: '$(workingDirectory)'
-        includeRootFolder: false
-        archiveType: zip
-        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-        replaceExistingArchive: true
-
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      artifact: drop
+        version: 'latest'
 
 - stage: Deploy
   displayName: Deploy stage
   dependsOn: Build
-  condition: succeeded()
+  condition: succeeded()  
+    
 
   jobs:
   - deployment: Deploy
@@ -77,12 +66,14 @@ stages:
     strategy:
       runOnce:
         deploy:
-
-          steps:
-          - task: AzureFunctionApp@1
-            displayName: 'Azure functions app deploy'
-            inputs:
+         steps:
+           
+           - task: AzureCLI@2
+             displayName: 'Run build and publish command'
+             inputs:
               azureSubscription: '$(azureSubscription)'
-              appType: functionAppLinux
-              appName: $(functionAppName)
-              package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+               cd $(workingDirectory)
+               az func azure functionapp publish $(functionAppName) --build remote
