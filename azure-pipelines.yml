@@ -31,7 +31,7 @@ stages:
         vmImage: $(vmImageName)
   
       steps:
-        
+
       - task: UsePythonVersion@0
         displayName: 'Set Python version to 3.7'
         inputs:
@@ -52,4 +52,4 @@ stages:
           scriptLocation: 'inlineScript'
           inlineScript: |
             cd $(workingDirectory)
-            az func azure functionapp publish $(functionAppName) --build remote
+            func azure functionapp publish $(functionAppName) --build remote
