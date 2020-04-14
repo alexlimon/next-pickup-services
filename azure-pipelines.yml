@@ -51,6 +51,7 @@ stages:
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
           inlineScript: |
+            chmod a+x /usr/lib/azure-functions-core-tools/gozip
             cd $(workingDirectory)
             pwd
             func azure functionapp publish $(functionAppName) --python --build remote
