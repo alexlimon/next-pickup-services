@@ -22,7 +22,7 @@ variables:
   
 stages:
   - stage: Build
-    displayName: Build stage
+    displayName: Build and Deploy Python Az Function
   
     jobs:
     - job: Build
@@ -31,49 +31,25 @@ stages:
         vmImage: $(vmImageName)
   
       steps:
-      - bash: |
-          if [ -f extensions.csproj ]
-          then
-              dotnet build extensions.csproj --runtime ubuntu.16.04-x64 --output ./bin
-          fi
-        workingDirectory: $(workingDirectory)
-        displayName: 'Build extensions'
-      
+        
       - task: UsePythonVersion@0
         displayName: 'Set Python version to 3.7'
         inputs:
          versionSpec: '3.7'
          addToPath: true
          architecture: 'x64'
+
       - task: FuncToolsInstaller@0
         displayName: 'Install function Azure Functions Toolset for Deployment'
         inputs:
           version: 'latest'
-  
-  - stage: Deploy
-    displayName: Deploy stage
-    dependsOn: Build
-    condition: succeeded()  
-      
-  
-    jobs:
-    - deployment: Deploy
-      displayName: Deploy
-      environment: 'development'
-      pool:
-        vmImage: $(vmImageName)
-  
-      strategy:
-        runOnce:
-          deploy:
-           steps:
-             
-             - task: AzureCLI@2
-               displayName: 'Run build and publish command'
-               inputs:
-                azureSubscription: '$(azureSubscription)'
-                scriptType: 'bash'
-                scriptLocation: 'inlineScript'
-                inlineScript: |
-                 cd $(workingDirectory)
-                 az func azure functionapp publish $(functionAppName) --build remote
+
+      - task: AzureCLI@2
+        displayName: 'Run build and publish command'
+        inputs:
+          azureSubscription: '$(azureSubscription)'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            cd $(workingDirectory)
+            az func azure functionapp publish $(functionAppName) --build remote
