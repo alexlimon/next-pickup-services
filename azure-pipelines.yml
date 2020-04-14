@@ -42,7 +42,7 @@ stages:
       - task: FuncToolsInstaller@0
         displayName: 'Install function Azure Functions Toolset for Deployment'
         inputs:
-          version: 'latest'
+          version: '3.0.2009'
 
       - task: AzureCLI@2
         displayName: 'Run build and publish command'
@@ -51,7 +51,6 @@ stages:
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
           inlineScript: |
-            chmod a+x /usr/lib/azure-functions-core-tools/gozip
             cd $(workingDirectory)
             pwd
             func azure functionapp publish $(functionAppName) --python --build remote
