@@ -65,8 +65,8 @@ stages:
           appSettings: |
             [
               {
-                "name": "MONGO_CONNECTION_STRING,
-                "value": "$(dbConnectionString-dev)",
+                "name": "MONGO_CONNECTION_STRING",
+                "value": $(dbConnectionString-dev),
                 "slotSetting": false
               }
             ]
