@@ -66,7 +66,7 @@ stages:
             [
               {
                 "name": "MONGO_CONNECTION_STRING",
-                "value": $(dbConnectionString-dev),
+                "value": "$(dbConnectionString-dev)",
                 "slotSetting": false
               }
             ]
