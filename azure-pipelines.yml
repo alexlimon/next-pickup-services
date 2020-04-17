@@ -19,6 +19,8 @@ variables:
   
     # Working Directory
     workingDirectory: 'microservices'
+
+    resourceGroupName: 'Next-Pickup'
   
 stages:
   - stage: Build
@@ -54,3 +56,18 @@ stages:
             cd $(workingDirectory)
             pwd
             func azure functionapp publish $(functionAppName) --python --build remote
+      - task: AzureAppServiceSettings@1
+        displayName: 'Add the appropriate settings to the functions'
+        inputs:
+          azureSubscription: $(azureSubscription)
+          appName: $(functionAppName)
+          resourceGroupName: $(resourceGroupName)
+          appSettings: |
+            [
+              {
+                "name": "MONGO_CONNECTION_STRING,
+                "value": "$(dbConnectionString-dev)",
+                "slotSetting": false
+              }
+            ]
+        
