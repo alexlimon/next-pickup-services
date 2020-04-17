@@ -1,4 +1,4 @@
-from .helpers import parameter_validation
+from .helpers import parameter_validation_async
 from .clients import heb_client
 from ..models.store_brand import StoreBrand
 from queue import PriorityQueue
@@ -7,8 +7,8 @@ import asyncio
 import time
 
 async def get_next_pickups(zipcode, num_stores_to_return = 5):
-    if not await parameter_validation.is_zipcode_valid(zipcode):
-        raise AttributeError("The zip code " + zipcode + " is invalid")
+    
+    await parameter_validation_async.validate_zipcode(zipcode)
 
     heb = StoreBrand()
     heb.name = "HEB"

@@ -6,8 +6,10 @@ import jsonpickle
 import aiohttp
 
 async def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
     zipcode = req.route_params.get('zipcode')
+
+    logging.info('Processing pickup times for zipcode: '+ str(zipcode))
+    
     try: 
         next_pickups = await heb_service.get_next_pickups(zipcode, 5)
     except AttributeError as ex:
