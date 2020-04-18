@@ -2,8 +2,8 @@ trigger:
 - az-func-release
   
 jobs:
-- job: Setup
-  displayName: Setup Build Agent 
+- job: Deploy  
+  displayName: Setup, Build and Deploy All Functions
   pool:
     vmImage: $(vmImageName)
   
@@ -19,13 +19,7 @@ jobs:
     displayName: 'Install function Azure Functions Toolset for Deployment'
     inputs:
       version: '3.0.2009'
-  
 
-- job: Deploy  
-  displayName: Build and Publish All Functions
-  dependsOn: Setup
-  
-  steps:
   - task: AzureCLI@2
     displayName: 'Run build and publish command'
     inputs:
