@@ -19,9 +19,8 @@ async function queryStores() {
     .then(function (data) {
       pickupTable.replaceChild(document.createElement('tbody'), pickupTable.getElementsByTagName('tbody')[0]);
       var pickupTableBody = pickupTable.getElementsByTagName('tbody')[0];
-      var store_brand = data["name"];
 
-      var header_list = ['store_brand', 'name', 'next_pickup_time', 'distance', 'location_link', 'store_hours'];
+      var header_list = ['name', 'next_pickup_time', 'distance', 'location_link', 'store_hours'];
       if(data["store_list"].length <= 0){
         window.alert("No times available for that zipcode. Sorry!");
         return;
@@ -29,12 +28,17 @@ async function queryStores() {
       data["store_list"].forEach(element => {
 
         var currentRow = pickupTableBody.insertRow();
-        var col = currentRow.insertCell(0);
-        var colText = document.createTextNode(store_brand);
         col.appendChild(colText);
 
-        for (var i = 1; i < 6; i++) {
+        //first element in the row with store brand and link to store
+        var colText = document.createElement("a");
+        colText.setAttribute("href", element["store_link"])
+        var linkText = document.createTextNode(element["store_brand"]);
+        colText.appendChild(linkText);
+
+        for (var i = 0; i < header_list.length; i++) {
           var col = currentRow.insertCell(i);
+        
           if(i == 4){
             var colText = document.createElement("a");
             colText.setAttribute("href", element[header_list[i]])
