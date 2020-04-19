@@ -8,6 +8,13 @@ jobs:
     vmImage: $(vmImageName)
   
   steps:
+    - task: AzureCLI@2
+      inputs:
+       azureSubscription: 'Alex Projects (fab41ebf-515a-4a19-9475-daa31a196c92)'
+       scriptType: 'ps'
+       scriptLocation: 'inlineScript'
+       inlineScript: 'az cdn endpoint purge -g ''Next-Pickup'' -n ''next-grocery'' --profile-name ''next-grocery-cdn'' --content-paths ''/*'''
+       addSpnToEnvironment: true
     - task: AzureFileCopy@4
       inputs:
         SourcePath: 'frontend\next-grocery\*'
