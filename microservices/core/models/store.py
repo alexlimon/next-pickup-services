@@ -16,6 +16,8 @@ class Store:
     zipcode: str
     address: str
     store_hours: str
+    store_brand: str
     location_link: str
+    store_link: str
 
 

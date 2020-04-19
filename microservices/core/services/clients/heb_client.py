@@ -27,16 +27,6 @@ async def get_stores_by_zipcode(zipcode, radius = 10, curbside_only = True, next
 
     return heb_stores
 
-async def get_earliest_pickup_day(store_id, num_days_to_check = 30):
-    timeslot_query = "timeslot/timeslots?store_id={store_id}&days={num_days}&fulfillment_type=pickup"
-
-    response = await requests.get_async(constants.HEB_BASE_URL + timeslot_query.format(store_id = store_id, num_days = str(num_days_to_check)))
-
-    if response["items"] is None or len(response["items"]) < 1:
-        return None
-    return response["items"][0]["timeslot"]["startTime"][:19]
-
-
 async def create_and_append_store(response_dict, distance_from_zip, heb_stores):
     new_store = Store()
     new_store.id = int(response_dict["id"])
@@ -56,10 +46,19 @@ async def create_and_append_store(response_dict, distance_from_zip, heb_stores):
     new_store.location_link = constants.MAPS_URL_LAT_LONG.format(lat = response_dict["latitude"], long = response_dict["longitude"])
     new_store.store_hours = response_dict["storeHours"]
     new_store.state = response_dict["state"]
+    new_store.store_brand = "HEB"
+    new_store.store_link = constants.HEB_HOME_PAGE
     
     heb_stores.put(new_store)
 
+async def get_earliest_pickup_day(store_id, num_days_to_check = 30):
+    timeslot_query = "timeslot/timeslots?store_id={store_id}&days={num_days}&fulfillment_type=pickup"
 
+    response = await requests.get_async(constants.HEB_BASE_URL + timeslot_query.format(store_id = store_id, num_days = str(num_days_to_check)))
+
+    if response["items"] is None or len(response["items"]) < 1:
+        return None
+    return response["items"][0]["timeslot"]["startTime"][:19]
 
 
 
