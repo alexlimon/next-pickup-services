@@ -1,4 +1,4 @@
-var zipcode = document.getElementById('zipcode_text').value;
+var zipcode = document.getElementById('zipcode_text');
 var pickupTable = document.getElementById('pickup-times-table');
 
 
@@ -13,7 +13,7 @@ zipcode.addEventListener("keyup", function(event) {
 
 async function queryStores() {
   
-  url = "https://next-pickup-services.azurewebsites.net/api/pickup/" + zipcode;
+  url = "https://next-pickup-services.azurewebsites.net/api/pickup/" + zipcode.value;
 
   fetch(url)
     .then(response => response.json())
