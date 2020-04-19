@@ -8,6 +8,15 @@ jobs:
     vmImage: $(vmImageName)
   
   steps:
+    - task: AzureFileCopy@4
+    displayName: 'Copy new static site to blob'
+    inputs:
+      SourcePath: 'frontend\next-grocery\*'
+      azureSubscription: 'Alex Projects (fab41ebf-515a-4a19-9475-daa31a196c92)'
+      Destination: 'AzureBlob'
+      storage: 'nextservicestorage'
+      ContainerName: '$web'
+
     - task: AzureCLI@2
       displayName: 'Remove old deployment from CDN Cache'
       inputs:
@@ -17,11 +26,4 @@ jobs:
        inlineScript: 'az cdn endpoint purge -g ''Next-Pickup'' -n ''next-grocery'' --profile-name ''next-grocery-cdn'' --content-paths ''/*'''
        addSpnToEnvironment: true
 
-    - task: AzureFileCopy@4
-      displayName: 'Copy new static site to blob'
-      inputs:
-        SourcePath: 'frontend\next-grocery\*'
-        azureSubscription: 'Alex Projects (fab41ebf-515a-4a19-9475-daa31a196c92)'
-        Destination: 'AzureBlob'
-        storage: 'nextservicestorage'
-        ContainerName: '$web'
+    
