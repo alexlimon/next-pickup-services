@@ -17,9 +17,9 @@
   <h1>Next Grocery</h1>
   <p>This website lets you see pickup and delivery times of stores nearby based on your zipcode!<strong> Only supporting HEB, more coming soon.</strong></p> 
   <p><strong>(Coming Soon) </strong>You can also register your phone number to get notifications if you are in need of finding a pickup / delivery time nearby</p> 
-  <form>
+  <form onsubmit="return false" on>
     <div class="input-group">
-      <input type="text" class="form-control" id ="zipcode_text" placeholder="Zip Code" required>
+      <input type="text" class="form-control" id ="zipcode_text" placeholder="Zip Code" >
       <div class="input-group-btn">
         <button type="button" class="btn btn-danger" onclick=queryStores()>Find Pickup Times</button>
       </div>
