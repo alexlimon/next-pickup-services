@@ -1,0 +1,46 @@
+trigger:
+- az-func-release
+  
+jobs:
+- job: Deploy  
+  displayName: Setup, Build and Deploy All Functions
+  pool:
+    vmImage: $(vmImageName)
+  
+  steps:
+  - task: UsePythonVersion@0
+    displayName: 'Set Python version to 3.7'
+    inputs:
+      versionSpec: '3.7'
+      addToPath: true
+      architecture: 'x64'
+
+  - task: FuncToolsInstaller@0
+    displayName: 'Install function Azure Functions Toolset for Deployment'
+    inputs:
+      version: '3.0.2009'
+
+  - task: AzureCLI@2
+    displayName: 'Run build and publish command'
+    inputs:
+      azureSubscription: '$(azureSubscription)'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        cd $(workingDirectory)
+        func azure functionapp publish $(functionAppName) --python --build remote
+            
+  - task: AzureAppServiceSettings@1
+    displayName: 'Add the appropriate settings to the functions'
+    inputs:
+      azureSubscription: $(azureSubscription)
+      appName: $(functionAppName)
+      resourceGroupName: $(resourceGroupName)
+      appSettings: |
+       [
+        {
+          "name": "MONGO_CONNECTION_STRING",
+          "value": "$(dbConnectionString-dev)",
+          "slotSetting": false
+        }
+       ]

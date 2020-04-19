@@ -7,6 +7,7 @@ from datetime import datetime
 class Store: 
     next_delivery_time: datetime = datetime.max
     next_pickup_time: datetime = datetime.max
+    distance: int
     id: int
     name : str
     phone_number: str

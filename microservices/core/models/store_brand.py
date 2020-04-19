@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json
-from app.models.store import Store
+from .store import Store
 from typing import List
 
 @dataclass_json
