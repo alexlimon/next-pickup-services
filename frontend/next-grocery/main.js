@@ -21,11 +21,11 @@ async function queryStores() {
       var pickupTableBody = pickupTable.getElementsByTagName('tbody')[0];
 
       var header_list = ['name', 'next_pickup_time', 'distance', 'location_link', 'store_hours'];
-      if(data["store_list"].length <= 0){
+      if(data.length <= 0){
         window.alert("No times available for that zipcode. Sorry!");
         return;
       }
-      data["store_list"].forEach(element => {
+      data.forEach(element => {
 
         var currentRow = pickupTableBody.insertRow();
         col.appendChild(colText);
