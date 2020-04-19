@@ -1,8 +1,5 @@
-var zipcode = document.getElementById('zipcode_text');
-var pickupTable = document.getElementById('pickup-times-table');
 
-
-zipcode.addEventListener("keyup", function(event) {
+document.getElementById('zipcode_text').addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
       event.preventDefault();
       queryStores();
@@ -10,9 +7,10 @@ zipcode.addEventListener("keyup", function(event) {
 });
 
 
-
 async function queryStores() {
-  
+  var zipcode = document.getElementById('zipcode_text').value;
+  var pickupTable = document.getElementById('pickup-times-table');
+
   url = "https://next-pickup-services.azurewebsites.net/api/pickup/" + zipcode.value;
 
   fetch(url)
